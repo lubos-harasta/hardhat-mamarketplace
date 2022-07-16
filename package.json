@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "local:mint": "yarn hardhat run scripts/mint-and-list.js --network localhost",
+    "local:cancel": "yarn hardhat run scripts/cancel-item.js --network localhost",
+    "local:buy": "yarn hardhat run scripts/buy-item.js --network localhost",
+    "local:update": "yarn hardhat run scripts/update-listing.js --network localhost"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",

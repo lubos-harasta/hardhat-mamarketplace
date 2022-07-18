@@ -1,7 +1,7 @@
 const { ethers, network } = require("hardhat")
 const { moveBlocks } = require("../utils/move-blocks")
 
-const TOKEN_ID = 6
+const TOKEN_ID = 0
 // const PRICE = ethers.utils.parseEther("0.1")
 
 async function buyItem() {

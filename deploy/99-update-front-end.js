@@ -1,12 +1,37 @@
+/**
+ * yarn hardhat deploy --network localhost --tags frontend
+ */
+
 const { ethers, network } = require("hardhat")
 const fs = require("fs")
 const frontEndAddressesMapping = "../nextjs-mamarketplace-moralis/constants/networkMapping.json"
+const frontEndAbi = "../nextjs-mamarketplace-moralis/constants/"
 
 module.exports = async function () {
     if (process.env.UPDATE_FRONT_END) {
         console.log("Updating fron-end...")
+        console.log("... contract addresses")
         await updateContractAddressesInFrontend()
+        console.log("... contract ABIs")
+        await updateContractABIsInFrontend()
     }
+}
+
+async function updateContractABIsInFrontend() {
+    // update NFT Marketplace contract ABI
+    // (it creates new ones or rewrite them)
+    const nftMarketplace = await ethers.getContract("NftMarketplace")
+    fs.writeFileSync(
+        `${frontEndAbi}NftMarketplace.json`,
+        nftMarketplace.interface.format(ethers.utils.FormatTypes.json)
+    )
+
+    // update Basic NFT contract ABI
+    const basicNft = await ethers.getContract("BasicNft")
+    fs.writeFileSync(
+        `${frontEndAbi}BasicNft.json`,
+        basicNft.interface.format(ethers.utils.FormatTypes.json)
+    )
 }
 
 async function updateContractAddressesInFrontend() {

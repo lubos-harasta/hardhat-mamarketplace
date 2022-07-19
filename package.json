@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "local:mint": "yarn hardhat run scripts/mint-and-list.js --network localhost",
+    "local:mint-and-list": "yarn hardhat run scripts/mint-and-list.js --network localhost",
+    "local:mint": "yarn hardhat run scripts/mint.js --network localhost",
     "local:cancel": "yarn hardhat run scripts/cancel-item.js --network localhost",
     "local:buy": "yarn hardhat run scripts/buy-item.js --network localhost",
     "local:update": "yarn hardhat run scripts/update-listing.js --network localhost",

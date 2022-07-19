@@ -35,10 +35,13 @@ async function updateContractABIsInFrontend() {
 }
 
 async function updateContractAddressesInFrontend() {
+    console.log("Updating markeplace addresses...")
     const nftMarketplace = await ethers.getContract("NftMarketplace")
+    const basicNft = await ethers.getContract("BasicNft")
     const chainId = network.config.chainId.toString()
     // get current contract addresses from frontend JSON file
     const contractAddresses = JSON.parse(fs.readFileSync(frontEndAddressesMapping, "utf-8"))
+    console.log(contractAddresses)
     if (chainId in contractAddresses) {
         // if nftMarketplace address for the given network already exists but the address of nftMarketplace not,
         // populate it;
@@ -46,9 +49,17 @@ async function updateContractAddressesInFrontend() {
             contractAddresses[chainId]["NftMarketplace"].push(nftMarketplace.address)
             console.log("Contract address of NftMarketplace has been updated.")
         }
+
+        if (!contractAddresses[chainId]["BasicNft"].includes(basicNft.address)) {
+            contractAddresses[chainId]["BasicNft"].push(basicNft.address)
+            console.log("Contract address of BasicNft has been updated.")
+        }
     } else {
-        contractAddresses[chainId] = { NftMarketplace: [nftMarketplace.address] }
-        console.log("Contract address of NftMarketplace has been created.")
+        contractAddresses[chainId] = {
+            NftMarketplace: [nftMarketplace.address],
+            BasicNft: [basicNft.address],
+        }
+        console.log("Contract address of NftMarketplace and BasicNft has been created.")
     }
     fs.writeFileSync(frontEndAddressesMapping, JSON.stringify(contractAddresses))
 }
